@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Restaurant POS (Web)</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🍽️ My Restaurant</h1>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="menu">My Menu</button>
+      <button class="tab-btn" data-tab="order">New Order</button>
+      <button class="tab-btn" data-tab="sales">Daily Sales</button>
+      <button class="tab-btn" data-tab="edit">Edit Menu</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- My Menu -->
+    <section id="tab-menu" class="tab active">
+      <div id="menu-grid" class="grid"></div>
+    </section>
+
+    <!-- New Order -->
+    <section id="tab-order" class="tab">
+      <div class="order-layout">
+        <div class="menu-pane">
+          <h2>Menu</h2>
+          <input id="search" placeholder="Search item..." />
+          <div id="menu-for-order" class="grid"></div>
+        </div>
+        <div class="cart-pane">
+          <h2>Order Summary</h2>
+          <div id="cart-list" class="cart-list"></div>
+          <div class="cart-total">
+            <div>Subtotal: ₹<span id="subtotal">0.00</span></div>
+            <div class="row">
+              <button id="clear-cart" class="btn secondary">Clear</button>
+              <button id="submit-order" class="btn primary">Submit Order</button>
+            </div>
+            <small class="muted">On submit: order is saved locally and sent to Google Sheets instantly.</small>
+            <div id="submit-status" class="status"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Daily Sales -->
+    <section id="tab-sales" class="tab">
+      <div class="sales-header">
+        <div>
+          <label for="sales-date">Date:</label>
+          <input type="date" id="sales-date"/>
+        </div>
+        <button id="export-csv" class="btn">Export CSV</button>
+      </div>
+      <div class="sales-cards">
+        <div class="card stat">
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-value">₹<span id="sales-total">0.00</span></div>
+        </div>
+        <div class="card stat">
+          <div class="stat-label">Total Items Sold</div>
+          <div class="stat-value"><span id="sales-qty">0</span></div>
+        </div>
+      </div>
+      <h3>Per-item Sales</h3>
+      <table class="table">
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Sales (₹)</th></tr>
+        </thead>
+        <tbody id="sales-tbody"></tbody>
+      </table>
+      <small class="muted">Note: Sales view aggregates orders saved locally for the selected date. Each order is also sent to Google Sheets.</small>
+    </section>
+
+    <!-- Edit Menu -->
+    <section id="tab-edit" class="tab">
+      <div class="row space-between">
+        <h2>Manage Menu</h2>
+        <button id="add-item-btn" class="btn primary">+ Add Item</button>
+      </div>
+      <table class="table">
+        <thead>
+          <tr><th>Image</th><th>Name</th><th>Price (₹)</th><th>ID</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="edit-tbody"></tbody>
+      </table>
+      <details class="mt">
+        <summary>Manager PIN (optional)</summary>
+        <div class="row">
+          <input id="manager-pin" placeholder="Set/Enter Manager PIN"/>
+          <button id="save-pin" class="btn">Save PIN</button>
+        </div>
+        <small class="muted">If a PIN is set, editing/deleting items requires entering the PIN.</small>
+      </details>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <dialog id="item-modal">
+    <form method="dialog" class="modal">
+      <h3 id="modal-title">Add Item</h3>
+      <label>Name
+        <input id="modal-name" required/>
+      </label>
+      <label>Price (₹)
+        <input id="modal-price" type="number" step="0.01" min="0" required/>
+      </label>
+      <label>Image URL
+        <input id="modal-image" placeholder="https://..."/>
+      </label>
+      <div class="row space-between">
+        <button value="cancel" class="btn secondary">Cancel</button>
+        <button id="modal-save" class="btn primary" value="default">Save</button>
+      </div>
+      <input type="hidden" id="modal-id"/>
+    </form>
+  </dialog>
+
+  <footer class="footer">
+    <span>Built for quick service • Works offline (local storage) • Sync to Google Sheets when online</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
