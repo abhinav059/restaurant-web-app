@@ -2,7 +2,7 @@
  * QUICK CONFIG
  **************/
 const CONFIG = {
-  SCRIPT_URL: "https://script.google.com/macros/s/PASTE_YOUR_DEPLOYMENT_ID/exec", // <- change this after step 5
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzYiZnOeVskXRGb6TLn-i9LgzU4lVdvd0iMhAWkp9j4FNLGa2FGcheogLmX3C30BnLwsA/exec", // <- change this after step 5
   SHEET_TOKEN: "", // optional shared secret; also set in Apps Script
   CURRENCY: "₹",
 };
